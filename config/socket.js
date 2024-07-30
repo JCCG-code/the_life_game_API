@@ -2,7 +2,10 @@
 import { Server } from 'socket.io'
 import dotenv from 'dotenv'
 
-// Config
+// Local files
+import corsOptions from './cors.js'
+
+// Env variables
 dotenv.config()
 
 // Initializations
@@ -11,13 +14,7 @@ let usersCount = 0
 
 export const initializeSocket = (server) => {
   io = new Server(server, {
-    cors: {
-      origin:
-        process.env.NODE_ENV === 'dev'
-          ? 'http://localhost:5173'
-          : 'https://jccg-code.github.io',
-      methods: ['GET', 'POST', 'PUT', 'DELETE']
-    }
+    cors: corsOptions
   })
 
   io.on('connection', (socket) => {
